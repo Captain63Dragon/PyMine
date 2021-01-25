@@ -55,7 +55,7 @@ class CommandHandler:
     async def handle_console(self):
         try:
             while True:
-                with patch_stdout:
+                with patch_stdout():
                     in_text = await self.server.prompt_ses.prompt_async(">")
 
                 # In the future, commands *should* be handled async,
