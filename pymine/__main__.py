@@ -1,3 +1,4 @@
+from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit import PromptSession
 import asyncio
 import sys
@@ -10,7 +11,7 @@ from pymine.util.logging import Logger, task_exception_handler
 import pymine.server
 
 if __name__ == "__main__":
-    prompt_ses = PromptSession()
+    prompt_ses = PromptSession(auto_suggest=AutoSuggestFromHistory())
     logger = Logger(prompt_ses)  # debug status will be set later after config is loaded
 
     loop = asyncio.get_event_loop()
