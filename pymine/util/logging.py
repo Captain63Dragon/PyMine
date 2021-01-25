@@ -10,7 +10,7 @@ if os.name == "nt":
 
     colorama.init()
 
-nice_time = lambda: time.strftime("%x %H:%M:%S")
+f_time = lambda: time.strftime("%x %H:%M:%S")
 
 BRIGHT = "\x1b[1m"
 END = "\x1b[0m"
@@ -33,24 +33,35 @@ class Logger:
         self._prompt_ses = prompt_ses
         self._debug = debug
 
+    @staticmethod
+    def f_print(text: str) -> None:
+        text = ANSI(text)
+
+        with patch_stdout():
+            print_formatted_text(text)
+
+    @staticmethod
+    def f_traceback(e: BaseException) -> str:
+        return "\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__, 4)).rstrip("\n")
+
     def debug(self, *message):
         if self._debug:
             message = " ".join([str(m) for m in message])
 
             with patch_stdout():
-                print(f"{WHITE}[{nice_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}")
+                f_print(f"{WHITE}[{f_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}")
 
     def info(self, *message):
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print(f"{BRIGHT}{WHITE}[{nice_time()} {BLUE}INFO{WHITE}]: {message}{END}")
+            f_print(f"{BRIGHT}{WHITE}[{f_time()} {BLUE}INFO{WHITE}]: {message}{END}")
 
     def warn(self, *message):
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print(f"{BRIGHT}{WHITE}[{nice_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}")
+            f_print(f"{BRIGHT}{WHITE}[{f_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}")
 
     warning = warn
 
@@ -58,25 +69,21 @@ class Logger:
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print(f"{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}")
+            f_print(f"{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}")
 
     def critical(self, *message):
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print(f"{BRIGHT}{WHITE}{BG_RED}[{nice_time()} CRITICAL]: {message}{END}")
-
-    @staticmethod
-    def f_traceback(e: BaseException):
-        return "\n" + "".join(traceback.format_exception(type(e), e, e.__traceback__, 4)).rstrip("\n")
+            f_print(f"{BRIGHT}{WHITE}{BG_RED}[{f_time()} CRITICAL]: {message}{END}")
 
 
 def task_exception_handler(loop, ctx):
     with patch_stdout():
         if ctx["exception"]:
-            print(f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{Logger.f_traceback(ctx["exception"])}{END}')
+            f_print(f'{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{Logger.f_traceback(ctx["exception"])}{END}')
         else:
-            print(f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{ctx["message"]}{END}')
+            f_print(f'{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{ctx["message"]}{END}')
 
 
 if __name__ == "__main__":  # Used to test colors
