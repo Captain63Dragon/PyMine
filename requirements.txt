@@ -1,7 +1,7 @@
-aioconsole
 aiohttp
 cryptography
 immutables
 nbt
+prompt_toolkit
 PyYAML
 gitpython
