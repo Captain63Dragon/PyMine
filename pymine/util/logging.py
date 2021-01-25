@@ -1,3 +1,6 @@
+from prompt_toolkit import print_formatted_text as print
+from prompt_toolkit.patch_stdout import patch_stdout
+from prompt_toolkit import PromptSession
 import traceback
 import time
 import os
@@ -26,11 +29,12 @@ class Logger:
     :attr type debug_: The value of the debug parameter.
     """
 
-    def __init__(self, debug: bool = True) -> None:
-        self.debug_ = debug
+    def __init__(self, prompt_ses: PromptSession, debug: bool = True) -> None:
+        self._prompt_ses = prompt_ses
+        self._debug = debug
 
     def debug(self, *message):
-        if self.debug_:
+        if self._debug:
             message = " ".join([str(m) for m in message])
             print(f"{WHITE}[{nice_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}")
 
