@@ -1,4 +1,3 @@
-import aioconsole
 import importlib
 import asyncio
 import os
@@ -55,7 +54,7 @@ class CommandHandler:
     async def handle_console(self):
         try:
             while True:
-                in_text = await aioconsole.ainput(">")
+                in_text = await self.server.prompt_ses.prompt_async(">")
 
                 # In the future, commands *should* be handled async,
                 # however, due to the way the console works rn we can't
