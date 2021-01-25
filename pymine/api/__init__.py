@@ -37,7 +37,7 @@ class PyMineAPI:
                     f"Failed to call handler {handler.__module__}.{handler.__qualname__} due to: {self.logger.f_traceback(e)}"
                 )
 
-    def wait_handlers(self, handlers: list):
+    async def wait_handlers(self, handlers: list):
         results = await asyncio.gather(*[h() for h in self.events._server_stop], return_exceptions=True)
 
         for h, res in zip(handlers, results):
