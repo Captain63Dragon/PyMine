@@ -52,7 +52,7 @@ class Server:
         self.favicon = load_favicon()
         self.comp_thresh = self.conf["comp_thresh"]
 
-        self.logger.debug_ = self.conf["debug"]
+        self.logger._debug = self.conf["debug"]
         asyncio.get_event_loop().set_debug(self.conf["debug"])
 
         self.aiohttp = None
