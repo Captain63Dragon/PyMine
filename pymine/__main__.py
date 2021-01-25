@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     try:
         loop.run_until_complete(server.start())
-    except asyncio.CancelledError:
+    except (KeyboardInterrupt, asyncio.CancelledError):
         pass
     except BaseException as e:
         logger.critical(logger.f_traceback(e))
