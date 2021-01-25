@@ -42,6 +42,7 @@ class Server:
             self.user_cache = {}  # {entity_id: {remote: tuple, uuid: str}}
 
     def __init__(self, prompt_ses: PromptSession, logger: Logger):
+        self.prompt_ses = prompt_ses
         self.logger = logger
 
         self.meta = self.Meta()
