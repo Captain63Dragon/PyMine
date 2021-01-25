@@ -56,7 +56,7 @@ class CommandHandler:
         try:
             while True:
                 with patch_stdout():
-                    in_text = await self.server.prompt_ses.prompt_async(">")
+                    in_text = await self.server.prompt_ses.prompt_async()
 
                 # In the future, commands *should* be handled async,
                 # however, due to the way the console works rn we can't
