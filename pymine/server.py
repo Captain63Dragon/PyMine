@@ -1,3 +1,4 @@
+from prompt_toolkit import PromptSession
 import asyncio
 import aiohttp
 import random
@@ -13,6 +14,7 @@ from pymine.data.packet_map import PACKET_MAP
 from pymine.util.logging import task_exception_handler, Logger
 from pymine.util.config import load_config, load_favicon
 from pymine.util.encryption import gen_rsa_keys
+from pymine.util.logging import Logger
 
 from pymine.api import PyMineAPI, StopStream
 
@@ -39,7 +41,7 @@ class Server:
             self.entity_id = {}  # {remote: entity_id}
             self.user_cache = {}  # {entity_id: {remote: tuple, uuid: str}}
 
-    def __init__(self, logger):
+    def __init__(self, prompt_ses: PromptSession, logger: Logger):
         self.logger = logger
 
         self.meta = self.Meta()
