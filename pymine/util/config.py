@@ -5,7 +5,7 @@ import yaml
 from pymine.util.misc import string_hash_code, gen_seed
 
 DEFAULT_CONFIG = {
-    "debug": True,
+    "debug": False,
     "server_ip": None,
     "server_port": 25565,
     "level_name": "world",
