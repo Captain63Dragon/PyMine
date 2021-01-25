@@ -1,4 +1,4 @@
-from prompt_toolkit import print_formatted_text as print, ANSI
+from prompt_toolkit import print_formatted_text, ANSI
 from prompt_toolkit import PromptSession
 import traceback
 import time
@@ -35,25 +35,25 @@ class Logger:
     def debug(self, *message):
         if self._debug:
             message = " ".join([str(m) for m in message])
-            print(ANSI(f"{WHITE}[{nice_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}"))
+            print_formatted_text(ANSI(f"{WHITE}[{nice_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}"))
 
     def info(self, *message):
         message = " ".join([str(m) for m in message])
-        print(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {BLUE}INFO{WHITE}]: {message}{END}"))
+        print_formatted_text(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {BLUE}INFO{WHITE}]: {message}{END}"))
 
     def warn(self, *message):
         message = " ".join([str(m) for m in message])
-        print(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}"))
+        print_formatted_text(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}"))
 
     warning = warn
 
     def error(self, *message):
         message = " ".join([str(m) for m in message])
-        print(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}"))
+        print_formatted_text(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}"))
 
     def critical(self, *message):
         message = " ".join([str(m) for m in message])
-        print(ANSI(f"{BRIGHT}{WHITE}{BG_RED}[{nice_time()} CRITICAL]: {message}{END}"))
+        print_formatted_text(ANSI(f"{BRIGHT}{WHITE}{BG_RED}[{nice_time()} CRITICAL]: {message}{END}"))
 
     @staticmethod
     def f_traceback(e: BaseException):
