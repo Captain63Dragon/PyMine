@@ -38,19 +38,19 @@ class Logger:
             message = " ".join([str(m) for m in message])
 
             with patch_stdout():
-                print_formatted_text(ANSI(f"{WHITE}[{nice_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}"))
+                print(f"{WHITE}[{nice_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}")
 
     def info(self, *message):
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print_formatted_text(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {BLUE}INFO{WHITE}]: {message}{END}"))
+            print(f"{BRIGHT}{WHITE}[{nice_time()} {BLUE}INFO{WHITE}]: {message}{END}")
 
     def warn(self, *message):
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print_formatted_text(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}"))
+            print(f"{BRIGHT}{WHITE}[{nice_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}")
 
     warning = warn
 
@@ -58,13 +58,13 @@ class Logger:
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print_formatted_text(ANSI(f"{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}"))
+            print(f"{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}")
 
     def critical(self, *message):
         message = " ".join([str(m) for m in message])
 
         with patch_stdout():
-            print_formatted_text(ANSI(f"{BRIGHT}{WHITE}{BG_RED}[{nice_time()} CRITICAL]: {message}{END}"))
+            print(f"{BRIGHT}{WHITE}{BG_RED}[{nice_time()} CRITICAL]: {message}{END}")
 
     @staticmethod
     def f_traceback(e: BaseException):
@@ -74,11 +74,11 @@ class Logger:
 def task_exception_handler(loop, ctx):
     with patch_stdout():
         if ctx["exception"]:
-            print_formatted_text(
+            print(
                 f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{Logger.f_traceback(ctx["exception"])}{END}'
             )
         else:
-            print_formatted_text(f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{ctx["message"]}{END}')
+            print(f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{ctx["message"]}{END}')
 
 
 if __name__ == "__main__":  # Used to test colors
