@@ -11,7 +11,7 @@ from pymine.util.logging import Logger, task_exception_handler
 import pymine.server
 
 if __name__ == "__main__":
-    prompt_ses = PromptSession(message='>', auto_suggest=AutoSuggestFromHistory(), complete_in_thread=False)
+    prompt_ses = PromptSession(message=">", auto_suggest=AutoSuggestFromHistory(), complete_in_thread=False)
     logger = Logger(prompt_ses)  # debug status will be set later after config is loaded
 
     loop = asyncio.get_event_loop()

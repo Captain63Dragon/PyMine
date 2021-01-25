@@ -74,7 +74,9 @@ class Logger:
 def task_exception_handler(loop, ctx):
     with patch_stdout():
         if ctx["exception"]:
-            print_formatted_text(f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{Logger.f_traceback(ctx["exception"])}{END}')
+            print_formatted_text(
+                f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{Logger.f_traceback(ctx["exception"])}{END}'
+            )
         else:
             print_formatted_text(f'{BRIGHT}{WHITE}[{nice_time()} {RED}ERROR{WHITE}]: {RED}{ctx["message"]}{END}')
 
