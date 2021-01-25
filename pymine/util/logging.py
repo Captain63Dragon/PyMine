@@ -1,5 +1,4 @@
 from prompt_toolkit import print_formatted_text as print, ANSI
-from prompt_toolkit.patch_stdout import patch_stdout
 from prompt_toolkit import PromptSession
 import traceback
 import time
