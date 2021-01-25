@@ -58,11 +58,6 @@ class CommandHandler:
                 with patch_stdout():
                     in_text = await self.server.prompt_ses.prompt_async()
 
-                # In the future, commands *should* be handled async,
-                # however, due to the way the console works rn we can't
-                # without messing up the output
-                # asyncio.create_task(handle_command(in_text))
-
                 await self.server_command(in_text)
         except (KeyboardInterrupt, asyncio.CancelledError):
             pass
