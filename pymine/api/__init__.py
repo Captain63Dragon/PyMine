@@ -37,6 +37,13 @@ class PyMineAPI:
                     f"Failed to call handler {handler.__module__}.{handler.__qualname__} due to: {self.logger.f_traceback(e)}"
                 )
 
+    def wait_handlers(self, handlers: list):
+        results = await asyncio.gather(*[h() for h in self.events._server_stop], return_exceptions=True)
+
+        for h, res in zip(handlers, results):
+            if isinstance(res, BaseException):
+                self.logger.error(f'Failed to call handler {h.__module__}.{h.__qualname__} due to: {self.logger.f_traceback(e)}')
+
     def update_repo(self, git_dir, git_url, root, plugin_name, do_clone=False):
         if do_clone:
             try:
@@ -197,9 +204,4 @@ class PyMineAPI:
                 self.logger.error(f"Error occurred while tearing down {plugin_name}: {self.logger.f_traceback(e)}")
 
         # call and await upon all registered on_server_stop handlers
-        self.taskify_handlers(self.events._server_stop)
-
-        try:
-            await asyncio.wait_for(asyncio.gather(*self.tasks), 5)
-        except asyncio.TimeoutError:
-            pass
+        await self.wait_handlers(self.events._server_stop)
