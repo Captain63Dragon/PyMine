@@ -1,3 +1,4 @@
+from prompt_toolkit import PromptSession
 import asyncio
 import sys
 import os
@@ -9,12 +10,13 @@ from pymine.util.logging import Logger, task_exception_handler
 import pymine.server
 
 if __name__ == "__main__":
-    logger = Logger()  # debug status will be set later after config is loaded
+    prompt_ses = PromptSession()
+    logger = Logger(prompt_ses)  # debug status will be set later after config is loaded
 
     loop = asyncio.get_event_loop()
     loop.set_exception_handler(task_exception_handler)
 
-    server = pymine.server.Server(logger)
+    server = pymine.server.Server(prompt_ses, logger)
     pymine.server.server = server
 
     try:
