@@ -42,7 +42,7 @@ class PyMineAPI:
 
         for h, res in zip(handlers, results):
             if isinstance(res, BaseException):
-                self.logger.error(f'Failed to call handler {h.__module__}.{h.__qualname__} due to: {self.logger.f_traceback(e)}')
+                self.logger.error(f'Failed to call handler {h.__module__}.{h.__qualname__} due to: {self.logger.f_traceback(res)}')
 
     def update_repo(self, git_dir, git_url, root, plugin_name, do_clone=False):
         if do_clone:
