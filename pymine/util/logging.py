@@ -34,11 +34,8 @@ class Logger:
         self._debug = debug
 
     @staticmethod
-    def f_print(text: str) -> None:
-        text = ANSI(text)
-
-        with patch_stdout():
-            print_formatted_text(text)
+    def out(text: str) -> None:
+        print_formatted_text(ANSI(text))
 
     @staticmethod
     def f_traceback(e: BaseException) -> str:
@@ -47,43 +44,32 @@ class Logger:
     def debug(self, *message):
         if self._debug:
             message = " ".join([str(m) for m in message])
-
-            with patch_stdout():
-                f_print(f"{WHITE}[{f_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}")
+            self.out(f"{WHITE}[{f_time()} {GREY}DEBUG{WHITE}]: {GREY}{message}{END}")
 
     def info(self, *message):
         message = " ".join([str(m) for m in message])
-
-        with patch_stdout():
-            f_print(f"{BRIGHT}{WHITE}[{f_time()} {BLUE}INFO{WHITE}]: {message}{END}")
+        self.out(f"{BRIGHT}{WHITE}[{f_time()} {BLUE}INFO{WHITE}]: {message}{END}")
 
     def warn(self, *message):
         message = " ".join([str(m) for m in message])
-
-        with patch_stdout():
-            f_print(f"{BRIGHT}{WHITE}[{f_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}")
+        self.out(f"{BRIGHT}{WHITE}[{f_time()} {YELLOW}WARNING{WHITE}]: {YELLOW}{message}{END}")
 
     warning = warn
 
     def error(self, *message):
         message = " ".join([str(m) for m in message])
-
-        with patch_stdout():
-            f_print(f"{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}")
+        self.out(f"{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{message}{END}")
 
     def critical(self, *message):
         message = " ".join([str(m) for m in message])
-
-        with patch_stdout():
-            f_print(f"{BRIGHT}{WHITE}{BG_RED}[{f_time()} CRITICAL]: {message}{END}")
+        self.out(f"{BRIGHT}{WHITE}{BG_RED}[{f_time()} CRITICAL]: {message}{END}")
 
 
 def task_exception_handler(loop, ctx):
-    with patch_stdout():
-        if ctx["exception"]:
-            f_print(f'{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{Logger.f_traceback(ctx["exception"])}{END}')
-        else:
-            f_print(f'{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{ctx["message"]}{END}')
+    if ctx["exception"]:
+        Logger.out(f'{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{Logger.f_traceback(ctx["exception"])}{END}')
+    else:
+        Logger.out(f'{BRIGHT}{WHITE}[{f_time()} {RED}ERROR{WHITE}]: {RED}{ctx["message"]}{END}')
 
 
 if __name__ == "__main__":  # Used to test colors
