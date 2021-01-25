@@ -198,4 +198,8 @@ class PyMineAPI:
 
         # call and await upon all registered on_server_stop handlers
         self.taskify_handlers(self.events._server_stop)
-        await asyncio.gather(*self.tasks)
+
+        try:
+            await asyncio.wait_for(asyncio.gather(*self.tasks), 5)
+        except asyncio.TimeoutError:
+            pass
