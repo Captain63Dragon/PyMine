@@ -1,6 +1,7 @@
 aiohttp
 cryptography
 immutables
+mutf8
 nbt
 prompt_toolkit
 PyYAML
