@@ -1,2 +1,9 @@
 git_url: https://github.com/py-mine/example-plugin.git
 module_folder: example_plugin
+name: my_plugin_name
+version: 0.01.101
+description: Describe what the plugin does and the reason it is awesome and needed to enjoy life
+author: John DoeOr Coolhandle
+license: GPLv3
+website: https://example.com/gettingStarted/MyPlugin.html 
+docs: https://example.com/docs/example_plugin.html
